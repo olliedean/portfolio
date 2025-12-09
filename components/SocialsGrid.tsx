@@ -32,7 +32,7 @@ export default function SocialsGrid() {
                     href={s.href}
                     target="_blank"
                     rel="noreferrer"
-                    className="group flex items-center justify-between rounded-xl border border-white/10 bg-neutral-800/50 p-3 text-zinc-200 hover:border-white/20 hover:bg-neutral-800"
+                    className="group flex items-center justify-between rounded-xl border-2 border-white/10 bg-neutral-800/50 p-3 text-zinc-200 hover:border-white/20 hover:bg-neutral-800"
                 >
                     <div className="flex items-center gap-3">
                         <div className="flex h-9 w-9 items-center justify-center rounded-lg text-zinc-200">
