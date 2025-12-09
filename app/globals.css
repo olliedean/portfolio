@@ -1,2 +1,30 @@
 @import "tailwindcss";
 
+.marquee {
+                    position: relative;
+                    overflow: hidden;
+                    height: calc(100% / 3);
+                  }
+                  .track {
+                    display: inline-flex;
+                    align-items: center;
+                    white-space: nowrap;
+                    gap: 0.75rem;
+                    min-width: 200%;
+                    animation-timing-function: linear;
+                    animation-iteration-count: infinite;
+                  }
+                  .track[data-direction="left"] {
+                    animation-name: marquee-left;
+                  }
+                  .track[data-direction="right"] {
+                    animation-name: marquee-right;
+                  }
+                  @keyframes marquee-left {
+                    0% { transform: translateX(0); }
+                    100% { transform: translateX(-50%); }
+                  }
+                  @keyframes marquee-right {
+                    0% { transform: translateX(-50%); }
+                    100% { transform: translateX(0); }
+                  }
