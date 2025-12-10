@@ -65,6 +65,7 @@ export default function PresenceCard() {
             height={80}
             className="rounded-md border-2 border-neutral-700 flex-shrink-0"
           />
+          { firstActivity.assets?.small_image && (
           <Image
             src={
               firstActivity
@@ -76,6 +77,7 @@ export default function PresenceCard() {
             height={30}
             className="rounded-full border-2 border-neutral-700 absolute top-[84px] left-[72px]"
           />
+          ) }
           <div>
             <p className="text-neutral-400 text-xs mb-1">
               {firstActivity ? presenceTypes[firstActivity.type] : "—"} on {firstActivity ? firstActivity.name : "—"}
