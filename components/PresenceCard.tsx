@@ -35,8 +35,8 @@ export default function PresenceCard() {
     );
   }
 
-  const activities = status!.activities;
-  const firstActivity = activities[1];
+  const activities = status?.activities ?? [];
+  const firstActivity = activities.find((a) => a && a.assets) ?? activities[0];
   console.log(status);
 
   const presenceTypes = ["Playing", "Streaming", "Listening", "Watching", "Custom", "Competing"];
@@ -56,7 +56,7 @@ export default function PresenceCard() {
         <div className="flex items-start gap-4">
           <Image
             src={
-              firstActivity
+              firstActivity.assets?.large_image
                 ? parseImageUrl(firstActivity.assets?.large_image)
                 : "/placeholder.png"
             }
@@ -68,7 +68,7 @@ export default function PresenceCard() {
           { firstActivity.assets?.small_image && (
           <Image
             src={
-              firstActivity
+              firstActivity.assets
                 ? parseImageUrl(firstActivity.assets?.small_image)
                 : "/placeholder.png"
             }
@@ -83,7 +83,7 @@ export default function PresenceCard() {
               {firstActivity ? presenceTypes[firstActivity.type] : "—"} on {firstActivity ? firstActivity.name : "—"}
             </p>
             <h4 className="text-white font-semibold">
-              {firstActivity ? firstActivity.details : "—"}
+                {firstActivity ? (firstActivity.details && firstActivity.details.trim() !== "" ? firstActivity.details : "👋") : "-"}
             </h4>
             <p className="text-neutral-400 text-sm">
               {firstActivity ? firstActivity.state : "—"}
