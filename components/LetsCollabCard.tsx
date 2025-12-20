@@ -1,10 +1,20 @@
+"use client";
+
+import { useState } from "react";
 import { FaArrowRight } from "react-icons/fa";
 import Card from "./Card";
-import Link from "next/link";
+import Modal from "./Modal";
 
 export default function LetsCollabCard() {
+    const [open, setOpen] = useState(false);
+
     return (
-        <Link href="mailto:olliedean@kakao.com" target="_blank" rel="noopener noreferrer" className="col-span-3">
+        <>
+        <button
+            type="button"
+            className="col-span-3 text-left cursor-pointer"
+            onClick={() => setOpen(true)}
+        >
             <Card colSpan={3} rowSpan={1} className="hover:border-white/20 hover:bg-neutral-800 overflow-hidden">
                 <div className="p-3 flex flex-row gap-8">
                     <div className="flex-grow">
@@ -13,11 +23,16 @@ export default function LetsCollabCard() {
                             i'm always open to new opportunities and collaborations. whether you have a project in mind or just want to chat about tech, feel free to reach out!
                         </span>
                     </div>
-                    <button className="text-sm ml-auto bg-white/4 border-white/5 border-2 text-white font-semibold py-1 rounded self-center w-full">
+                    <span className="text-sm ml-auto bg-white/4 border-white/5 border-2 text-white font-semibold py-1 px-3 rounded self-center">
                         lets talk <FaArrowRight className="inline ml-2" />
-                    </button>
+                    </span>
                 </div>
             </Card>
-        </Link>
+        </button>
+
+        <Modal open={open} onClose={() => setOpen(false)}>
+            ttt
+        </Modal>
+        </>
     );
 }

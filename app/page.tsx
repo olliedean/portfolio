@@ -6,6 +6,7 @@ import ResumeCard from "@/components/ResumeCard";
 import ProjectsCard from "@/components/Projects";
 import LetsCollabCard from "@/components/LetsCollabCard";
 import PresenceCard from "@/components/PresenceCard";
+import StatsCard from "@/components/StatsCard";
 
 export default function Home() {
   return (
@@ -17,6 +18,7 @@ export default function Home() {
       <ResumeCard />
       <ProjectsCard />
       <LetsCollabCard />
+      <StatsCard />
     </PortfolioGrid>
   );
 }
