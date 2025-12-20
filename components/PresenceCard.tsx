@@ -4,7 +4,7 @@ import { FaClock, FaDiscord } from "react-icons/fa";
 import Image from "next/image";
 import Card from "./Card";
 import { useLanyard } from "react-use-lanyard";
-import { parse } from "path";
+import moment from "moment";
 
 export default function PresenceCard() {
 
@@ -42,12 +42,94 @@ export default function PresenceCard() {
   const presenceTypes = ["Playing", "Streaming", "Listening", "Watching", "Custom", "Competing"];
 
   function parseImageUrl(imageString: string | undefined): string {
-    if (!imageString) return "/placeholder.png";
-    const parts = imageString.split("/");
-    const httpsIndex = parts.indexOf("https");
-    if (httpsIndex === -1 || httpsIndex === parts.length - 1) return "/placeholder.png";
-    const rest = parts.slice(httpsIndex + 1).join("/");
-    return `https://${rest}`;
+    if (!imageString) return "/placeholder.jpg";
+
+    if (/^https?:\/\//.test(imageString)) return imageString;
+
+    if (imageString.startsWith("mp:external/")) {
+      const after = imageString.slice("mp:external/".length);
+
+      if (/^https?:\/\//.test(after)) return after;
+
+      const httpsSeg = after.indexOf("/https/");
+      if (httpsSeg !== -1) {
+      return "https://" + after.slice(httpsSeg + "/https/".length);
+      }
+
+      const httpSeg = after.indexOf("/http/");
+      if (httpSeg !== -1) {
+      return "http://" + after.slice(httpSeg + "/http/".length);
+      }
+
+      return "/placeholder.jpg";
+    }
+
+    if (imageString.includes(":")) {
+      const [appId, imageId] = imageString.split(":");
+      if (appId && imageId && /^\d+$/.test(appId)) {
+        return `https://cdn.discordapp.com/app-assets/${appId}/${imageId}.png?size=160`;
+      }
+    }
+
+    const appId = firstActivity?.application_id;
+    if (appId) {
+      return `https://cdn.discordapp.com/app-assets/${appId}/${imageString}.png?size=160`;
+    }
+
+    return "/placeholder.jpg";
+  }
+
+  function formatMs(ms: number): string {
+    const duration = moment.duration(ms);
+    const totalHours = Math.floor(duration.asHours());
+    const minutes = duration.minutes();
+    const seconds = duration.seconds();
+    const pad = (n: number) => String(n).padStart(2, "0");
+
+    if (totalHours > 0) {
+      return `${totalHours}:${pad(minutes)}:${pad(seconds)}`;
+    }
+
+    return `${pad(minutes)}:${pad(seconds)}`;
+  }
+
+  function formatDuration(value: { start?: number; end?: number } | number | undefined): string {
+    if (typeof value === "number") {
+      return formatMs(Math.max(0, value));
+    }
+
+    if (value && typeof value === "object") {
+      const { start, end } = value;
+
+      if (start && end && end > start) {
+        const total = end - start;
+        const elapsed = Math.min(Date.now() - start, total);
+        return `${formatMs(elapsed)} - ${formatMs(total)}`;
+      }
+
+      if (start) {
+        const elapsed = Date.now() - start;
+        return formatMs(Math.max(0, elapsed));
+      }
+    }
+
+    return "—";
+  }
+
+  if (typeof window !== "undefined") {
+    (window as any).__presenceTimestamps = firstActivity?.timestamps ?? null;
+
+    if (!(window as any).__presenceTimer) {
+      const update = () => {
+        const el = document.getElementById("time");
+        if (!el) return;
+        const ts = (window as any).__presenceTimestamps;
+        el.textContent = ts ? formatDuration(ts) : "—";
+      };
+
+      update();
+      (window as any).__presenceTimer = setInterval(update, 1000);
+    }
   }
 
   return (
@@ -58,7 +140,7 @@ export default function PresenceCard() {
             src={
               firstActivity.assets?.large_image
                 ? parseImageUrl(firstActivity.assets?.large_image)
-                : "/placeholder.png"
+                : "/placeholder.jpg"
             }
             alt="discord presence large"
             width={80}
@@ -70,7 +152,7 @@ export default function PresenceCard() {
             src={
               firstActivity.assets
                 ? parseImageUrl(firstActivity.assets?.small_image)
-                : "/placeholder.png"
+                : "/placeholder.jpg"
             }
             alt="discord presence small"
             width={30}
@@ -90,10 +172,9 @@ export default function PresenceCard() {
             </p>
             <p className="text-neutral-500 text-sm">
               <FaClock className="inline mr-1" />
-              {firstActivity ? firstActivity.timestamps?.start
-                ? `since ${new Date(firstActivity.timestamps.start).toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})}`
-                : ""
-                : "—"}
+              <span id="time">
+                -
+              </span>
             </p>
           </div>
         </div>
