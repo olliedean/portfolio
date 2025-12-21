@@ -39,7 +39,7 @@ export default function SocialsGrid() {
                             {s.icon}
                         </div>
                         <div className="flex flex-1">
-                            <span className="text-sm font-medium w-full">{s.handle}&nbsp;</span>
+                            <span className="text-sm font-medium w-full">{s.handle}</span>
                         </div>
                     </div>
                     <div className="flex items-center gap-2">
