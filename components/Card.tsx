@@ -1,13 +1,13 @@
-import { ReactNode } from "react";
+import { ReactNode, HTMLAttributes } from "react";
 
-interface CardProps {
+type CardProps = Omit<HTMLAttributes<HTMLDivElement>, "className"> & {
   children: ReactNode;
   className?: string;
   colSpan?: number;
   rowSpan?: number;
-}
+};
 
-export default function Card({ children, className = "", colSpan = 1, rowSpan = 1 }: CardProps) {
+export default function Card({ children, className = "", colSpan = 1, rowSpan = 1, ...rest }: CardProps) {
   // Map numbers to safe class names to ensure Tailwind includes them
   const colSpanClasses = {
     1: 'col-span-1',
@@ -37,7 +37,10 @@ export default function Card({ children, className = "", colSpan = 1, rowSpan = 
   const rowClass = rowSpanClasses[rowSpan as keyof typeof rowSpanClasses] || 'row-span-1';
   
   return (
-    <div className={`${colClass} ${rowClass} bg-neutral-800/50 rounded-lg border-2 border-white/5 ${className}`}>
+    <div
+      className={`${colClass} ${rowClass} bg-neutral-800/50 rounded-lg border-2 border-white/5 ${className}`}
+      {...rest}
+    >
       {children}
     </div>
   );

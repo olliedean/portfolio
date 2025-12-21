@@ -1,6 +1,7 @@
 import Image from "next/image";
 import Card from "./Card";
 import { LuPanelTopOpen } from "react-icons/lu";
+import { CgArrowTopRight } from "react-icons/cg";
 
 export default function StatsCard() {
     return (
@@ -8,7 +9,7 @@ export default function StatsCard() {
             <div className="flex">
                 <span className="text-white font-medium">stats</span>
                 <div className="flex-grow" />
-                <LuPanelTopOpen size={12} className="mt-1 text-neutral-400" />
+                <CgArrowTopRight size={18} className="mt-1 text-neutral-400" />
             </div>
             <Image
                 src="/chart-simple-solid-full.svg"

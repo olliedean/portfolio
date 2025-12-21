@@ -25,7 +25,7 @@ const socials: Social[] = [
 
 export default function SocialsGrid() {
     return (
-        <section aria-label="social links" className="grid grid-cols-1 col-span-2 gap-3">
+        <section aria-label="social links" className="grid grid-cols-1 col-span-1 gap-3">
             {socials.map((s) => (
                 <a
                     key={s.label}
@@ -34,16 +34,16 @@ export default function SocialsGrid() {
                     rel="noreferrer"
                     className="group flex items-center justify-between rounded-xl border-2 border-white/10 bg-neutral-800/50 p-3 text-zinc-200 hover:border-white/20 hover:bg-neutral-800"
                 >
-                    <div className="flex items-center gap-3">
-                        <div className="flex h-9 w-9 items-center justify-center rounded-lg text-zinc-200">
+                    <div className="flex items-center gap-2 flex-grow">
+                        <div className="flex h-9 items-center rounded-lg text-zinc-200">
                             {s.icon}
                         </div>
-                        <div className="flex flex-col">
-                            <span className="text-sm font-medium">{s.handle}</span>
+                        <div className="flex flex-1">
+                            <span className="text-sm font-medium w-full">{s.handle}&nbsp;</span>
                         </div>
                     </div>
                     <div className="flex items-center gap-2">
-                        <FaExternalLinkAlt />
+                        <FaExternalLinkAlt size={12} className="text-neutral-400" />
                     </div>
                 </a>
             ))}
