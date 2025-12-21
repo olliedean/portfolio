@@ -104,7 +104,12 @@ export default function PresenceCard() {
       if (start && end && end > start) {
         const total = end - start;
         const elapsed = Math.min(Date.now() - start, total);
-        return `${formatMs(elapsed)} - ${formatMs(total)}`;
+        return `
+        <span>${formatMs(elapsed)}</span>
+        <div class="bg-neutral-500 h-1 flex-1 rounded-sm">
+          <div class="bg-neutral-400 h-1 rounded-sm" style="width: ${(elapsed / total) * 100}%;"></div>
+        </div>
+        <span>${formatMs(total)}</span>`;
       }
 
       if (start) {
@@ -124,7 +129,7 @@ export default function PresenceCard() {
         const el = document.getElementById("time");
         if (!el) return;
         const ts = (window as any).__presenceTimestamps;
-        el.textContent = ts ? formatDuration(ts) : "—";
+        el.innerHTML = ts ? formatDuration(ts) : "—";
       };
 
       update();
@@ -135,7 +140,7 @@ export default function PresenceCard() {
   return (
     <Card colSpan={3} className="p-4 relative overflow-hidden items-center flex">
       <div className="flex justify-between items-start leading-none w-full">
-        <div className="flex items-start gap-4">
+        <div className="flex items-start gap-4 w-full">
           <Image
             src={
               firstActivity.assets?.large_image
@@ -160,7 +165,7 @@ export default function PresenceCard() {
             className="rounded-full border-2 border-neutral-700 absolute top-[84px] left-[72px]"
           />
           ) }
-          <div>
+          <div className="flex-1">
             <p className="text-neutral-400 text-xs mb-1">
               {firstActivity ? presenceTypes[firstActivity.type] : "—"} on {firstActivity ? firstActivity.name : "—"}
             </p>
@@ -170,9 +175,9 @@ export default function PresenceCard() {
             <p className="text-neutral-400 text-sm">
               {firstActivity ? firstActivity.state : "—"}
             </p>
-            <p className="text-neutral-500 text-sm">
+            <p className="text-neutral-500 text-sm flex items-center">
               <FaClock className="inline mr-1" />
-              <span id="time">
+              <span id="time" className="flex w-3/4 items-center gap-1">
                 -
               </span>
             </p>
