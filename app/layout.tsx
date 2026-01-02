@@ -15,6 +15,9 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   title: "ollie dean",
   description: "hi :3",
+  icons: {
+    icon: "https://fav.farm/🐝",
+  },
 };
 
 export default function RootLayout({
