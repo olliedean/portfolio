@@ -5,8 +5,16 @@ import Image from "next/image";
 import Card from "./Card";
 import { useLanyard } from "react-use-lanyard";
 import moment from "moment";
+import { useEffect, useState } from "react";
 
 export default function PresenceCard() {
+
+  const [now, setNow] = useState(() => Date.now());
+
+  useEffect(() => {
+    const id = setInterval(() => setNow(Date.now()), 1000);
+    return () => clearInterval(id);
+  }, []);
 
   const {loading, status} = useLanyard({
     userId: "165170547192233985",
@@ -40,6 +48,10 @@ export default function PresenceCard() {
   console.log(status);
 
   const presenceTypes = ["Playing", "Streaming", "Listening", "Watching", "Custom", "Competing"];
+
+  type DurationResult =
+    | { type: "bar"; elapsed: string; percent: number; total: string }
+    | { type: "text"; value: string };
 
   function parseImageUrl(imageString: string | undefined): string {
     if (!imageString) return "/placeholder.jpg";
@@ -93,9 +105,9 @@ export default function PresenceCard() {
     return `${pad(minutes)}:${pad(seconds)}`;
   }
 
-  function formatDuration(value: { start?: number; end?: number } | number | undefined): string {
+  function formatDuration(value: { start?: number; end?: number } | number | undefined): DurationResult {
     if (typeof value === "number") {
-      return formatMs(Math.max(0, value));
+      return { type: "text", value: formatMs(Math.max(0, value)) };
     }
 
     if (value && typeof value === "object") {
@@ -103,39 +115,36 @@ export default function PresenceCard() {
 
       if (start && end && end > start) {
         const total = end - start;
-        const elapsed = Math.min(Date.now() - start, total);
-        return `
-        <span>${formatMs(elapsed)}</span>
-        <div class="bg-neutral-500 h-1 flex-1 rounded-sm">
-          <div class="bg-neutral-400 h-1 rounded-sm" style="width: ${(elapsed / total) * 100}%;"></div>
-        </div>
-        <span>${formatMs(total)}</span>`;
+        const elapsed = Math.min(now - start, total);
+        const percent = (elapsed / total) * 100;
+        return { type: "bar", elapsed: formatMs(elapsed), percent, total: formatMs(total) };
       }
 
       if (start) {
-        const elapsed = Date.now() - start;
-        return formatMs(Math.max(0, elapsed));
+        const elapsed = now - start;
+        return { type: "text", value: formatMs(Math.max(0, elapsed)) };
       }
     }
 
-    return "—";
+    return { type: "text", value: "—" };
   }
 
-  if (typeof window !== "undefined") {
-    (window as any).__presenceTimestamps = firstActivity?.timestamps ?? null;
-
-    if (!(window as any).__presenceTimer) {
-      const update = () => {
-        const el = document.getElementById("time");
-        if (!el) return;
-        const ts = (window as any).__presenceTimestamps;
-        el.innerHTML = ts ? formatDuration(ts) : "—";
-      };
-
-      update();
-      (window as any).__presenceTimer = setInterval(update, 1000);
+  const renderDuration = () => {
+    const parsed = formatDuration(firstActivity?.timestamps);
+    if (parsed.type === "bar") {
+      return (
+        <span className="flex w-full items-center gap-2">
+          <span>{parsed.elapsed}</span>
+          <div className="bg-neutral-500 h-1 flex-1 rounded-sm">
+            <div className="bg-neutral-400 h-1 rounded-sm" style={{ width: `${parsed.percent}%` }} />
+          </div>
+          <span>{parsed.total}</span>
+        </span>
+      );
     }
-  }
+
+    return parsed.value;
+  };
 
   return (
     <Card colSpan={3} className="p-4 relative overflow-hidden items-center flex">
@@ -177,8 +186,8 @@ export default function PresenceCard() {
             </p>
             <p className="text-neutral-500 text-sm flex items-center">
               <FaClock className="inline mr-1" />
-              <span id="time" className="flex w-3/4 items-center gap-1">
-                -
+              <span className="flex w-3/4 items-center gap-1">
+                {renderDuration()}
               </span>
             </p>
           </div>

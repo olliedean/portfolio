@@ -13,7 +13,7 @@ export default function ProfileCard() {
           className="rounded-md border-2 border-neutral-700"
         />
         <div className="leading-none my-auto">
-          <h1 className="text-xl font-bold text-white">hey, i'm ollie dean</h1>
+          <h1 className="text-xl font-bold text-white">hey, i&apos;m ollie dean</h1>
           <p className="text-neutral-400 mb-3">a freelance software and web developer based in the uk</p>
           <div className="flex items-center gap-2 bg-neutral-900/40 px-3 py-1 rounded-full w-max border border-neutral-700">
             <div className="w-2 h-2 bg-green-400 rounded-full"></div>

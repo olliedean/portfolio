@@ -1,6 +1,5 @@
 import Image from "next/image";
 import Card from "./Card";
-import { LuPanelTopOpen } from "react-icons/lu";
 import { CgArrowTopRight } from "react-icons/cg";
 
 export default function StatsCard() {

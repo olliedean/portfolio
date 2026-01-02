@@ -11,25 +11,29 @@ type ModalProps = {
 
 export default function Modal({ children, open = false, onClose = () => {} }: ModalProps) {
     const [isMounted, setIsMounted] = useState(open);
-    const [isClosing, setIsClosing] = useState(false);
     const [isVisible, setIsVisible] = useState(open);
 
     useEffect(() => {
         if (open) {
-            setIsMounted(true);
-            setIsClosing(false);
-            requestAnimationFrame(() => setIsVisible(true));
-            return undefined;
+            const raf = requestAnimationFrame(() => {
+                setIsMounted(true);
+                setIsVisible(true);
+            });
+            return () => cancelAnimationFrame(raf);
         }
 
         if (isMounted) {
-            setIsClosing(true);
-            setIsVisible(false);
-            const timer = setTimeout(() => {
-                setIsMounted(false);
-                setIsClosing(false);
-            }, 300);
-            return () => clearTimeout(timer);
+            let timer: ReturnType<typeof setTimeout> | undefined;
+            const raf = requestAnimationFrame(() => {
+                setIsVisible(false);
+                timer = setTimeout(() => {
+                    setIsMounted(false);
+                }, 300);
+            });
+            return () => {
+                cancelAnimationFrame(raf);
+                if (timer) clearTimeout(timer);
+            };
         }
         return undefined;
     }, [open, isMounted]);
