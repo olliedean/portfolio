@@ -4,7 +4,7 @@ import Link from "next/link";
 
 export default function LetsCollabCard() {
     return (
-        <Link href="mailto:olliedean@kakao.com" rel="noopener noreferrer" className="col-span-3 cursor-pointer">
+        <Link href="mailto:olliedean@kakao.com" rel="noopener noreferrer" className="col-span-3 cursor-pointer col-span-4 md:col-span-3">
             <Card colSpan={3} rowSpan={1} className="hover:border-white/20 hover:bg-neutral-800 overflow-hidden">
                 <div className="p-3 flex flex-row gap-8">
                     <div className="flex-grow">

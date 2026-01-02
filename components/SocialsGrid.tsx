@@ -25,7 +25,7 @@ const socials: Social[] = [
 
 export default function SocialsGrid() {
     return (
-        <section aria-label="social links" className="grid grid-cols-1 col-span-1 gap-3">
+        <section aria-label="social links" className="grid grid-cols-1 col-span-4 md:col-span-1 gap-3">
             {socials.map((s) => (
                 <a
                     key={s.label}
