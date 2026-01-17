@@ -38,7 +38,7 @@ export default function Card({ children, className = "", colSpan = 1, rowSpan = 
 
   return (
     <div
-      className={`${colClass} ${rowClass} bg-neutral-800/50 rounded-lg border-2 border-white/5 ${className}`}
+      className={`${colClass} ${rowClass} bg-neutral-800/50 rounded-lg border-2 border-white/5 min-h-0 ${className}`}
       {...rest}
     >
       {children}
