@@ -3,12 +3,12 @@ import Card from "@/components/Card";
 import LastfmCard from "@/components/LastfmCard";
 import {
   fetchGithubPinned,
-  fetchGithubLatestPush,
   fetchLastfmRecent,
   fetchSteamSummary,
   fetchSteamRecentGames,
   fetchTraktSummary,
 } from "@/lib/stats";
+import { FaStar } from "react-icons/fa";
 
 export const dynamic = "force-dynamic";
 
@@ -32,7 +32,7 @@ export default async function StatsPage() {
         </div>
         <div className="relative z-10">
           <div className="flex items-start justify-between">
-            <div>
+            <div className="leading-tight">
               <h2 className="text-white font-semibold">last played</h2>
               <p className="text-neutral-400 text-sm">steam</p>
             </div>
@@ -55,13 +55,13 @@ export default async function StatsPage() {
             <Card colSpan={3} rowSpan={1} className="p-4">
         <h2 className="text-white font-semibold">top repos</h2>
         <ul className="mt-3 grid grid-cols-1 md:grid-cols-2 gap-2">
-          {github.map((r) => (
+          {github.slice(0, 4).map((r) => (
             <li key={r.url} className="bg-neutral-800/40 border border-white/5 rounded-md p-3">
               <a href={r.url} target="_blank" className="text-white text-sm font-semibold hover:underline">
                 {r.name}
               </a>
               {r.description && <p className="text-neutral-400 text-xs mt-1">{r.description}</p>}
-              <p className="text-neutral-500 text-xs mt-1">⭐ {r.stars}</p>
+              <p className="text-neutral-500 text-xs mt-1 flex gap-1 items-center"><FaStar className="text-yellow-300" /> {r.stars}</p>
             </li>
           ))}
         </ul>
@@ -71,8 +71,10 @@ export default async function StatsPage() {
       <LastfmCard tracks={lastfm} />
 
       <Card colSpan={3} rowSpan={1} className="p-4">
-        <h2 className="text-white font-semibold">trakt</h2>
-        <p className="text-neutral-400 text-sm">watching stats</p>
+        <div className="leading-tight">
+          <h2 className="text-white font-semibold">trakt</h2>
+          <p className="text-neutral-400 text-sm">watching stats</p>
+        </div>
         <div className="mt-3 grid grid-cols-2 gap-2">
           <div className="bg-neutral-800/40 border border-white/5 rounded-md p-3">
             <p className="text-neutral-400 text-xs">movie plays</p>
