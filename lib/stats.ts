@@ -101,27 +101,6 @@ export async function fetchGithubPinned(): Promise<GithubRepo[]> {
   }
 }
 
-export async function fetchGithubLatestPush(): Promise<{ repo: string; message: string; url: string } | null> {
-  const username = process.env.GITHUB_USER || 'olliedean';
-  const token = process.env.GITHUB_TOKEN;
-  const headers: Record<string, string> = { 'Accept': 'application/vnd.github+json' };
-  if (token) headers['Authorization'] = `Bearer ${token}`;
-
-  try {
-    const res = await safeFetch(`https://api.github.com/users/${username}/events`, { headers });
-    const events = await res.json();
-    const push = (Array.isArray(events) ? events : []).find((e) => e?.type === 'PushEvent');
-    if (!push) return null;
-    const repoName = push?.repo?.name as string | undefined;
-    const commitMsg = push?.payload?.commits?.[0]?.message as string | undefined;
-    const url = repoName ? `https://github.com/${repoName}` : undefined;
-    if (!repoName || !commitMsg || !url) return null;
-    return { repo: repoName, message: commitMsg, url };
-  } catch {
-    return null;
-  }
-}
-
 export async function fetchSteamSummary(): Promise<SteamSummary> {
   const key = process.env.STEAM_API_KEY;
   const id = process.env.STEAM_ID;
