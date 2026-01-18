@@ -8,7 +8,7 @@ import {
   fetchSteamRecentGames,
   fetchTraktSummary,
 } from "@/lib/stats";
-import { FaStar } from "react-icons/fa";
+import { FaExternalLinkAlt, FaStar } from "react-icons/fa";
 
 export const dynamic = "force-dynamic";
 
@@ -34,7 +34,12 @@ export default async function StatsPage() {
           <div className="flex items-start justify-between">
             <div className="leading-tight">
               <h2 className="text-white font-semibold">last played</h2>
-              <p className="text-neutral-400 text-sm">steam</p>
+              <a 
+                className="text-neutral-400 text-sm hover:text-white underline underline-offset-2"
+                href="https://steamcommunity.com/id/olliedeannnn" target="_blank" rel="noopener noreferrer"
+              >
+                steam <FaExternalLinkAlt className="inline-block ml-1 text-xs" />
+              </a>
             </div>
             <span className="text-neutral-400 text-sm">{steam.personaName ?? '—'}</span>
           </div>
@@ -52,8 +57,16 @@ export default async function StatsPage() {
         </div>
       </Card>
 
-            <Card colSpan={3} rowSpan={1} className="p-4">
-        <h2 className="text-white font-semibold">top repos</h2>
+      <Card colSpan={3} rowSpan={1} className="p-4">
+        <div className="leading-tight">
+          <h2 className="text-white font-semibold">top repos</h2>
+          <a
+            className="text-neutral-400 text-sm hover:text-white underline underline-offset-2"
+            href="https://github.com/olliedean" target="_blank" rel="noopener noreferrer"
+          >
+            github.com <FaExternalLinkAlt className="inline-block ml-1 text-xs" />
+          </a>
+        </div>
         <ul className="mt-3 grid grid-cols-1 md:grid-cols-2 gap-2">
           {github.slice(0, 4).map((r) => (
             <li key={r.url} className="bg-neutral-800/40 border border-white/5 rounded-md p-3">
@@ -72,8 +85,13 @@ export default async function StatsPage() {
 
       <Card colSpan={3} rowSpan={1} className="p-4">
         <div className="leading-tight">
-          <h2 className="text-white font-semibold">trakt</h2>
-          <p className="text-neutral-400 text-sm">watching stats</p>
+          <h2 className="text-white font-semibold">watching stats</h2>
+          <a 
+            className="text-neutral-400 text-sm hover:text-white underline underline-offset-2"
+            href="https://trakt.tv/users/olliedean" target="_blank" rel="noopener noreferrer"
+          >
+            trakt.tv <FaExternalLinkAlt className="inline-block ml-1 text-xs" />
+          </a>
         </div>
         <div className="mt-3 grid grid-cols-2 gap-2">
           <div className="bg-neutral-800/40 border border-white/5 rounded-md p-3">
