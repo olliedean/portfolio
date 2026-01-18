@@ -1,30 +1,55 @@
 @import "tailwindcss";
 
 .marquee {
-                    position: relative;
-                    overflow: hidden;
-                    height: calc(100% / 3);
-                  }
-                  .track {
-                    display: inline-flex;
-                    align-items: center;
-                    white-space: nowrap;
-                    gap: 0.75rem;
-                    min-width: 200%;
-                    animation-timing-function: linear;
-                    animation-iteration-count: infinite;
-                  }
-                  .track[data-direction="left"] {
-                    animation-name: marquee-left;
-                  }
-                  .track[data-direction="right"] {
-                    animation-name: marquee-right;
-                  }
-                  @keyframes marquee-left {
-                    0% { transform: translateX(0); }
-                    100% { transform: translateX(-50%); }
-                  }
-                  @keyframes marquee-right {
-                    0% { transform: translateX(-50%); }
-                    100% { transform: translateX(0); }
-                  }
+  position: relative;
+  overflow: hidden;
+  height: calc(100% / 3);
+}
+.track {
+  display: inline-flex;
+  align-items: center;
+  white-space: nowrap;
+  gap: 0.75rem;
+  min-width: 200%;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+}
+.track[data-direction="left"] {
+  animation-name: marquee-left;
+}
+.track[data-direction="right"] {
+  animation-name: marquee-right;
+}
+@keyframes marquee-left {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+@keyframes marquee-right {
+  0% { transform: translateX(-50%); }
+  100% { transform: translateX(0); }
+}
+
+
+.custom-scrollbar {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(82, 82, 82, 0.9) rgba(255, 255, 255, 0.08);
+  scrollbar-gutter: stable both-edges;
+}
+.custom-scrollbar::-webkit-scrollbar {
+  width: 10px;
+}
+.custom-scrollbar::-webkit-scrollbar-button {
+  display: none;
+}
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.08);
+  border-radius: 9999px;
+}
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background: #525252;
+  border-radius: 9999px;
+  border: 2px solid rgba(23, 23, 23, 0.85);
+}
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: #6b7280;
+}

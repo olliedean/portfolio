@@ -38,7 +38,7 @@ export default function ProjectsCard() {
                 {/*<a href="https://github.com/olliedean" target="_blank" className="text-xs text-neutral-400 hover:text-white">see more</a> */}
             </div>
 
-            <div className="space-y-3 overflow-y-auto max-h-64 md:max-h-[16rem] pr-1">
+            <div className="space-y-3 overflow-y-auto max-h-64 md:max-h-[16rem] pr-1 custom-scrollbar">
                 {projects.map((p) => (
                     <a
                         key={p.name}
