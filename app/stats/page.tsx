@@ -30,7 +30,7 @@ export default async function StatsPage() {
           go back
         </Link>
       </div>
-      <PortfolioGrid>
+      <PortfolioGrid autoRows>
         <Card colSpan={4} rowSpan={1} className="p-4 overflow-hidden relative hover:border-white/20 hover:bg-neutral-800">
           <div className="absolute inset-0 opacity-10 pointer-events-none">
             {steamRecent.games[0]?.logoUrl && (
@@ -64,6 +64,27 @@ export default async function StatsPage() {
             <div className="mt-3 text-neutral-400 text-xs">total this 2 weeks: {Math.round((steamRecent.totalMinutes ?? 0)/60)} hours</div>
           </div>
         </Card>
+                <Card colSpan={3} rowSpan={1} className="p-4">
+          <div className="leading-tight">
+            <h2 className="text-white font-semibold">watching stats</h2>
+            <a 
+              className="text-neutral-400 text-sm hover:text-white underline underline-offset-2"
+              href="https://trakt.tv/users/olliedean" target="_blank" rel="noopener noreferrer"
+            >
+              trakt.tv <FaExternalLinkAlt className="inline-block ml-1 text-xs" />
+            </a>
+          </div>
+          <div className="mt-3 grid grid-cols-2 gap-2">
+            <div className="bg-neutral-800/40 border border-white/5 rounded-md p-3">
+              <p className="text-neutral-400 text-xs">movie plays</p>
+              <p className="text-white text-lg font-semibold">{trakt.playsMovies ?? 0}</p>
+            </div>
+            <div className="bg-neutral-800/40 border border-white/5 rounded-md p-3">
+              <p className="text-neutral-400 text-xs">episode plays</p>
+              <p className="text-white text-lg font-semibold">{trakt.playsEpisodes ?? 0}</p>
+            </div>
+          </div>
+        </Card>
 
         <Card colSpan={3} rowSpan={1} className="p-4">
           <div className="leading-tight">
@@ -90,28 +111,6 @@ export default async function StatsPage() {
 
 
         <LastfmCard tracks={lastfm} />
-
-        <Card colSpan={3} rowSpan={1} className="p-4">
-          <div className="leading-tight">
-            <h2 className="text-white font-semibold">watching stats</h2>
-            <a 
-              className="text-neutral-400 text-sm hover:text-white underline underline-offset-2"
-              href="https://trakt.tv/users/olliedean" target="_blank" rel="noopener noreferrer"
-            >
-              trakt.tv <FaExternalLinkAlt className="inline-block ml-1 text-xs" />
-            </a>
-          </div>
-          <div className="mt-3 grid grid-cols-2 gap-2">
-            <div className="bg-neutral-800/40 border border-white/5 rounded-md p-3">
-              <p className="text-neutral-400 text-xs">movie plays</p>
-              <p className="text-white text-lg font-semibold">{trakt.playsMovies ?? 0}</p>
-            </div>
-            <div className="bg-neutral-800/40 border border-white/5 rounded-md p-3">
-              <p className="text-neutral-400 text-xs">episode plays</p>
-              <p className="text-white text-lg font-semibold">{trakt.playsEpisodes ?? 0}</p>
-            </div>
-          </div>
-        </Card>
       </PortfolioGrid>
     </main>
   );
