@@ -10,6 +10,7 @@ import {
 } from "@/lib/stats";
 import { FaArrowLeft, FaExternalLinkAlt, FaStar } from "react-icons/fa";
 import Link from "next/dist/client/link";
+import Image from "next/image";
 
 export const dynamic = "force-dynamic";
 
@@ -34,8 +35,7 @@ export default async function StatsPage() {
         <Card colSpan={4} rowSpan={1} className="p-4 overflow-hidden relative hover:border-white/20 hover:bg-neutral-800">
           <div className="absolute inset-0 opacity-10 pointer-events-none">
             {steamRecent.games[0]?.logoUrl && (
-              // eslint-disable-next-line @next/next/no-img-element
-              <img src={steamRecent.games[0].logoUrl} alt="last played" className="w-full h-full object-cover" />
+              <Image src={steamRecent.games[0].logoUrl} alt="last played" className="w-full h-full object-cover" width={256} height={256} />
             )}
           </div>
           <div className="relative z-10">
@@ -53,8 +53,7 @@ export default async function StatsPage() {
             </div>
             <div className="mt-3 flex items-center gap-3">
               {steamRecent.games[0]?.logoUrl && (
-                // eslint-disable-next-line @next/next/no-img-element
-                <img src={steamRecent.games[0].logoUrl} alt="logo" className="w-16 h-16 rounded-md border border-white/10" />
+                <Image src={steamRecent.games[0].logoUrl} alt="logo" className="w-16 h-16 rounded-md border border-white/10" width={64} height={64} />
               )}
               <div>
                 <p className="text-white text-sm font-medium">{steamRecent.games[0]?.name ?? '—'}</p>

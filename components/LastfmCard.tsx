@@ -1,6 +1,7 @@
 "use client";
 import Card from "./Card";
 import type { LastfmRecentTrack } from "@/lib/stats";
+import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
 import { FaPlay, FaPause, FaExternalLinkAlt } from "react-icons/fa";
 
@@ -22,8 +23,7 @@ function ArtworkButton({ src, active, onClick, className }: { src?: string; acti
   if (!src) return null;
   return (
     <button aria-label={active ? "Pause preview" : "Play preview"} onClick={onClick} className={`relative group shrink-0 ${className ?? ''}`}>
-      {/* eslint-disable-next-line @next/next/no-img-element */}
-      <img src={src} alt="art" className="rounded-md border border-white/10 w-full h-full object-cover" />
+      <Image src={src} alt="art" className="rounded-md border border-white/10 w-full h-full object-cover" width={80} height={80} />
       <span className="absolute inset-0 flex items-center justify-center rounded-md bg-black/35 opacity-0 group-hover:opacity-100 transition-opacity">
         <span className="inline-grid place-items-center w-7 h-7">
           {active ? <FaPause className="text-white" /> : <FaPlay className="text-white" />}
