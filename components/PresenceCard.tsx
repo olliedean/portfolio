@@ -43,9 +43,24 @@ export default function PresenceCard() {
     );
   }
 
+  if (!status) {
+    return null;
+  }
+
   const activities = status?.activities ?? [];
-  const firstActivity = activities.find((a) => a && a.assets) ?? activities[0];
-  console.log(status);
+  let firstActivity = activities.find((a) => a && a.assets) ?? activities[0];
+
+  if(!firstActivity) {
+    firstActivity = {
+      state: "",
+      id: "",
+      name: "",
+      type: 0,
+      created_at: 0,
+    };
+  }
+
+  // console.log(status);
 
   const presenceTypes = ["Playing", "Streaming", "Listening", "Watching", "Custom", "Competing"];
 
@@ -149,7 +164,7 @@ export default function PresenceCard() {
   return (
     <Card colSpan={3} className="p-4 relative overflow-hidden items-center flex">
       <div className="flex justify-between items-start leading-none w-full">
-        <div className="flex items-start gap-4 w-full">
+        <div className="flex items-center gap-4 w-full">
           <Image
             src={
               firstActivity.assets?.large_image
@@ -176,10 +191,10 @@ export default function PresenceCard() {
           ) }
           <div className="flex-1">
             <p className="text-neutral-400 text-xs mb-1">
-              {firstActivity ? presenceTypes[firstActivity.type] : "—"} on {firstActivity ? firstActivity.name : "—"}
+              {firstActivity ? presenceTypes[firstActivity.type] : "—"} on {firstActivity.name ? firstActivity.name : "—"}
             </p>
             <h4 className="text-white font-semibold">
-                {firstActivity ? (firstActivity.details && firstActivity.details.trim() !== "" ? firstActivity.details : "👋") : "-"}
+                {firstActivity ? (firstActivity.details && firstActivity.details.trim() !== "" ? firstActivity.details : "not up to anything") : "-"}
             </h4>
             <p className="text-neutral-400 text-sm">
               {firstActivity ? firstActivity.state : "—"}
