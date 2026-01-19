@@ -5,7 +5,7 @@ import Link from "next/link";
 
 export default function ResumeCard() {
     return (
-        <Link href="/resume.pdf" target="_blank" rel="noopener noreferrer" className="col-span-4 md:col-span-1">
+        <Link href="https://ollie.cool/resume" target="_blank" rel="noopener noreferrer" className="col-span-4 md:col-span-1">
             <Card colSpan={1} rowSpan={1} className="relative p-3 overflow-hidden md:aspect-square hover:border-white/20 hover:bg-neutral-800">
                 <div className="flex relative z-10">
                     <span className="text-white font-medium">resume</span>
