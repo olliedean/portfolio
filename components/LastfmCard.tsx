@@ -3,7 +3,6 @@ import Card from "./Card";
 import type { LastfmRecentTrack } from "@/lib/stats";
 import { useEffect, useRef, useState } from "react";
 import { FaPlay, FaPause, FaExternalLinkAlt } from "react-icons/fa";
-import { FaE } from "react-icons/fa6";
 
 async function fetchPreviewUrl(artist?: string, track?: string): Promise<string | undefined> {
   try {
