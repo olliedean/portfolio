@@ -133,13 +133,13 @@ export default function PresenceCard() {
     const parsed = formatDuration(firstActivity?.timestamps);
     if (parsed.type === "bar") {
       return (
-        <span className="flex w-full items-center gap-2">
+        <div className="flex w-full items-center gap-2">
           <span>{parsed.elapsed}</span>
           <div className="bg-neutral-500 h-1 flex-1 rounded-sm">
             <div className="bg-neutral-400 h-1 rounded-sm" style={{ width: `${parsed.percent}%` }} />
           </div>
           <span>{parsed.total}</span>
-        </span>
+        </div>
       );
     }
 
@@ -184,12 +184,12 @@ export default function PresenceCard() {
             <p className="text-neutral-400 text-sm">
               {firstActivity ? firstActivity.state : "—"}
             </p>
-            <p className="text-neutral-500 text-sm flex items-center">
+            <div className="text-neutral-500 text-sm flex items-center">
               <FaClock className="inline mr-1" />
-              <span className="flex w-3/4 items-center gap-1">
+              <div className="flex w-3/4 items-center gap-1">
                 {renderDuration()}
-              </span>
-            </p>
+              </div>
+            </div>
           </div>
         </div>
         <button className="text-neutral-400 absolute top-4 right-4 hover:text-white" aria-label="Open Discord">
