@@ -120,7 +120,7 @@ export default function LastfmCard({ tracks }: LastfmCardProps) {
       )}
 
       <ul className="mt-3 grid grid-cols-1 md:grid-cols-2 gap-2">
-        {rest.map((t) => (
+        {rest.slice(0, 4).map((t) => (
           <li key={`${t.artist}-${t.name}`} className="flex items-center justify-between bg-neutral-800/40 border border-white/5 rounded-md px-3 py-2">
             <div className="flex items-center gap-3 min-w-0">
               <ArtworkButton src={t.artUrl} active={playingKey === keyFor(t)} onClick={() => togglePlay(t)} className="w-12 h-12" />
