@@ -125,6 +125,9 @@ export async function fetchSteamSummary(): Promise<SteamSummary> {
 export async function fetchSteamRecentGames(): Promise<{ totalMinutes: number; games: SteamRecentGame[] }> {
   const key = process.env.STEAM_API_KEY;
   const id = process.env.STEAM_ID;
+
+  if (!key || !id) return { totalMinutes: 0, games: [] };
+
   try {
     const res = await safeFetch(`https://api.steampowered.com/IPlayerService/GetRecentlyPlayedGames/v1/?key=${encodeURIComponent(key)}&steamid=${encodeURIComponent(id)}&count=6`);
     const data = await res.json();
