@@ -47,6 +47,9 @@ function safeFetch(input: RequestInfo, init?: RequestInit & { next?: { revalidat
 export async function fetchLastfmRecent(): Promise<LastfmRecentTrack[]> {
   const apiKey = process.env.LASTFM_API_KEY;
   const user = process.env.LASTFM_USER;
+
+  if (!apiKey || !user) return [];
+
   const url = `https://ws.audioscrobbler.com/2.0/?method=user.getrecenttracks&user=${encodeURIComponent(user)}&api_key=${encodeURIComponent(apiKey)}&format=json&limit=5`;
   const res = await safeFetch(url);
   const data = await res.json();
