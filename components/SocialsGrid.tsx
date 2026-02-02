@@ -12,7 +12,7 @@ const socials: Social[] = [
     {
         label: "discord",
         handle: "olliedean",
-        href: "https://discord.com/users/olliedean",
+        href: "https://discord.gg/Kc4CwFBSRS",
         icon: <FaDiscord />,
     },
     {
