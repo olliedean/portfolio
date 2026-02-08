@@ -106,7 +106,7 @@ export async function fetchStatsfmRecent(): Promise<StatsFMRecentTrack[]> {
     const artists = track?.artists as unknown[] | undefined;
     const artist = Array.isArray(artists) ? (artists[0] as Record<string, unknown> | undefined) : undefined;
     const album = track?.album as Record<string, unknown> | undefined;
-    const previewUrl = track?.preview_url as string | undefined;
+    const previewUrl = track?.appleMusicPreview as string | undefined;
     return {
       name: track?.name as string | undefined,
       artist: artist?.name as string | undefined,

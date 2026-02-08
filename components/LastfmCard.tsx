@@ -1,23 +1,10 @@
 "use client";
 import Card from "./Card";
-import type { LastfmRecentTrack } from "@/lib/stats";
+import type { StatsFMRecentTrack } from "@/lib/stats";
 import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
 import { FaPlay, FaPause, FaExternalLinkAlt } from "react-icons/fa";
 
-async function fetchPreviewUrl(artist?: string, track?: string): Promise<string | undefined> {
-  try {
-    const params = new URLSearchParams();
-    if (artist) params.set("artist", artist);
-    if (track) params.set("track", track);
-    const res = await fetch(`/api/deezer?${params.toString()}`);
-    if (!res.ok) return undefined;
-    const data = await res.json();
-    return (data?.previewUrl as string | undefined) ?? undefined;
-  } catch {
-    return undefined;
-  }
-}
 
 function ArtworkButton({ src, active, onClick, className }: { src?: string; active: boolean; onClick: () => void; className?: string }) {
   if (!src) return null;
@@ -34,7 +21,7 @@ function ArtworkButton({ src, active, onClick, className }: { src?: string; acti
 }
 
 interface LastfmCardProps {
-  tracks: LastfmRecentTrack[];
+  tracks: StatsFMRecentTrack[];
 }
 
 export default function LastfmCard({ tracks }: LastfmCardProps) {
@@ -43,7 +30,7 @@ export default function LastfmCard({ tracks }: LastfmCardProps) {
   const [playingKey, setPlayingKey] = useState<string | null>(null);
   const previewCache = useRef<Record<string, string>>({});
 
-  const keyFor = (t: Pick<LastfmRecentTrack, "artist" | "name">) => `${t.artist ?? ''}-${t.name ?? ''}`.toLowerCase();
+  const keyFor = (t: Pick<StatsFMRecentTrack, "artist" | "name">) => `${t.artist ?? ''}-${t.name ?? ''}`.toLowerCase();
 
   useEffect(() => {
     return () => {
@@ -55,7 +42,7 @@ export default function LastfmCard({ tracks }: LastfmCardProps) {
     };
   }, []);
 
-  async function togglePlay(t: LastfmRecentTrack) {
+  async function togglePlay(t: StatsFMRecentTrack) {
     const key = keyFor(t);
     if (playingKey === key) {
       const audio = audioRef.current;
@@ -76,9 +63,10 @@ export default function LastfmCard({ tracks }: LastfmCardProps) {
       audioRef.current = null;
     }
 
+    console.log(t);
     let preview: string | undefined = previewCache.current[key];
     if (!preview) {
-      preview = await fetchPreviewUrl(t.artist, t.name);
+      preview = t.previewUrl;
       if (preview) previewCache.current[key] = preview;
     }
 
