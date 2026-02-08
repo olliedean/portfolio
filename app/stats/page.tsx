@@ -3,10 +3,10 @@ import Card from "@/components/Card";
 import LastfmCard from "@/components/LastfmCard";
 import {
   fetchGithubPinned,
-  fetchLastfmRecent,
   fetchSteamSummary,
   fetchSteamRecentGames,
   fetchTraktSummary,
+  fetchStatsfmRecent,
 } from "@/lib/stats";
 import { FaArrowLeft, FaExternalLinkAlt, FaStar } from "react-icons/fa";
 import Link from "next/dist/client/link";
@@ -16,7 +16,7 @@ export const dynamic = "force-dynamic";
 
 export default async function StatsPage() {
   const [lastfm, github, steam, trakt, steamRecent ] = await Promise.all([
-    fetchLastfmRecent(),
+    fetchStatsfmRecent(),
     fetchGithubPinned(),
     fetchSteamSummary(),
     fetchTraktSummary(),

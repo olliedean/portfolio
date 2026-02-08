@@ -9,6 +9,16 @@ export type LastfmRecentTrack = {
   artUrl?: string;
 };
 
+export type StatsFMRecentTrack = {
+  name: string;
+  artist: string;
+  album?: string;
+  url?: string;
+  date?: number;
+  artUrl?: string;
+  previewUrl?: string;
+};
+
 export type GithubRepo = {
   name: string;
   stars: number;
@@ -82,6 +92,30 @@ export async function fetchLastfmRecent(): Promise<LastfmRecentTrack[]> {
       date: typeof uts === 'string' ? Number(uts) : typeof uts === 'number' ? uts : undefined,
       artUrl: typeof artUrl === 'string' ? artUrl : undefined,
     } as LastfmRecentTrack;
+  });
+}
+
+export async function fetchStatsfmRecent(): Promise<StatsFMRecentTrack[]> {
+  const statsFMUser = process.env.STATSFM_USER || 'olliedean';
+  const res = await safeFetch(`https://api.stats.fm/api/v1/users/${encodeURIComponent(statsFMUser)}/streams/recent`);
+  const data = await res.json();
+  const streams = (data?.items ?? []) as unknown[];
+  return streams.map((raw) => {
+    const s = raw as Record<string, unknown>;
+    const track = s?.track as Record<string, unknown> | undefined;
+    const artists = track?.artists as unknown[] | undefined;
+    const artist = Array.isArray(artists) ? (artists[0] as Record<string, unknown> | undefined) : undefined;
+    const album = track?.album as Record<string, unknown> | undefined;
+    const previewUrl = track?.preview_url as string | undefined;
+    return {
+      name: track?.name as string | undefined,
+      artist: artist?.name as string | undefined,
+      album: album?.name as string | undefined,
+      url: track?.url as string | undefined,
+      date: typeof s?.played_at === 'string' ? Date.parse(s.played_at) : undefined,
+      artUrl: (track?.albums as { image?: string }[] | undefined)?.[0]?.image as string | undefined,
+      previewUrl: previewUrl && typeof previewUrl === 'string' ? previewUrl : undefined,
+    } as StatsFMRecentTrack;
   });
 }
 

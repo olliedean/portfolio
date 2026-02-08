@@ -102,9 +102,9 @@ export default function LastfmCard({ tracks }: LastfmCardProps) {
           <h2 className="text-white font-semibold">listening to</h2>
           <a 
             className="text-neutral-400 text-sm hover:text-white underline underline-offset-2"
-            href="https://www.last.fm/user/olliedeannn" target="_blank" rel="noopener noreferrer"
+            href="https://www.stats.fm/user/olliedean" target="_blank" rel="noopener noreferrer"
           >
-            last.fm <FaExternalLinkAlt className="inline-block ml-1 text-xs" />
+            stats.fm <FaExternalLinkAlt className="inline-block ml-1 text-xs" />
           </a>
         </div>
       </div>
