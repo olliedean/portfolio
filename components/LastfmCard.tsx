@@ -81,6 +81,10 @@ export default function LastfmCard({ tracks }: LastfmCardProps) {
     setPlayingKey(key);
     audio.onended = () => setPlayingKey((cur) => (cur === key ? null : cur));
     audio.onerror = () => setPlayingKey((cur) => (cur === key ? null : cur));
+    audio.onpause = () => {
+      audioRef.current = null;
+      setPlayingKey((cur) => (cur === key ? null : cur));
+    };
     await audio.play().catch(() => setPlayingKey(null));
   }
   return (
